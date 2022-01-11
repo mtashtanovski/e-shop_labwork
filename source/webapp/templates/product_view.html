@@ -5,13 +5,13 @@
 
 {% block nav %}
     <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="#">Добавить товар</a>
+        <a class="nav-link" aria-current="page" href="{% url 'add_product' %}">Добавить товар</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="#">Редактировать</a>
+        <a class="nav-link" aria-current="page" href="{% url 'update_product' product.pk %}">Редактировать</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="#">Удалить</a>
+        <a class="nav-link" aria-current="page" href="{% url 'delete_product' product.pk  %}">Удалить</a>
     </li>
 {% endblock %}
 
