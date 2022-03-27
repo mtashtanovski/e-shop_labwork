@@ -11,7 +11,9 @@ class ProductForm(forms.ModelForm):
 
 class SearchForm(forms.Form):
     search = forms.CharField(
-        max_length=100,
-        required=False,
-        label="Поиск"
+        max_length=30,
+        label='Найти',
+        widget=forms.TextInput(
+            attrs={'class': 'myfieldclass'}
+        )
     )

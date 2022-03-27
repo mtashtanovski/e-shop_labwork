@@ -39,3 +39,10 @@
     text-align: center;
     border: solid 1px gray;
 }
+
+.myfieldclass {
+    width: 295px;
+    margin-bottom: 15px;
+    height: 31px;
+    padding: 0;
+}
