@@ -1,6 +1,5 @@
 from django import forms
-from django.forms import widgets
-from webapp.models import Product
+from webapp.models import Product, Cart, Order
 
 
 class ProductForm(forms.ModelForm):
@@ -17,3 +16,15 @@ class SearchForm(forms.Form):
             attrs={'class': 'myfieldclass'}
         )
     )
+
+
+class CartForm(forms.ModelForm):
+    class Meta:
+        model = Cart
+        fields = ['qty']
+
+
+class OrderForm(forms.ModelForm):
+    class Meta:
+        model = Order
+        fields = ['products']

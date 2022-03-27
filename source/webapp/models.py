@@ -64,6 +64,16 @@ class Cart(models.Model):
     def __str__(self):
         return f"{self.product.title} - {self.qty}"
 
+    def get_product_total(self):
+        return self.qty * self.product.price
+
+    @classmethod
+    def get_total(cls):
+        total = 0
+        for cart in cls.objects.all():
+            total += cart.get_product_total()
+        return total
+
     class Meta:
         verbose_name = 'Товар в корзине'
         verbose_name_plural = 'Товары в корзине'
@@ -120,7 +130,7 @@ class OrderProduct(models.Model):
     )
 
     def __str__(self):
-        return f'{self.product.title} - {self.order.name} - {self.order.format_time()}'
+        return f"{self.product.title} - {self.order.name}"
 
     class Meta:
         verbose_name = 'Товар в заказе'
