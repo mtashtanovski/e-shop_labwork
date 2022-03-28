@@ -31,9 +31,10 @@
         {% endfor %}
         </tbody>
     </table>
-
     <h5>Общая цена: {{ total }}</h5>
+    <hr>
 
+    <h1>Оформить заказ</h1>
     <form class="row g-3" action="{% url "webapp:order_create_view" %}" method="post">
         {% include "partials/form.html" with button_txt="Заказать" %}
     </form>
