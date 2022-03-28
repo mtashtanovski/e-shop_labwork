@@ -24,10 +24,10 @@
                         <h5 class="card-title"><a
                                 href="{% url "webapp:product_view" product.pk %}">{{ product.title }}</a></h5>
                         <p class="card-text">Категория: {{ product.get_category_display }}</p>
-                        <p class="card-text">Осталось: {{ product.amount }} по {{ product.price }} сом</p>
+                        <p class="card-text">Осталось: <b>{{ product.balance }}</b> по {{ product.price }} сом</p>
                         <div class="btn-group">
-                            <a class="btn btn-primary" href="{% url 'webapp:product_update' product.pk %}">Изменить</a>
-                            <a class="btn btn-danger" href="{% url 'webapp:product_delete' product.pk %}">Удалить</a>
+                            <a class="btn btn-outline-primary" href="{% url 'webapp:product_update' product.pk %}">Изменить</a>
+                            <a class="btn btn-outline-danger" href="{% url 'webapp:product_delete' product.pk %}">Удалить</a>
                         </div>
                         {% include "partials/cart_add_form.html" %}
                     </div>
