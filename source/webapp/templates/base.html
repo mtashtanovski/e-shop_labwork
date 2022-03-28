@@ -37,6 +37,19 @@
                     {% block nav %}
                     {% endblock nav %}
                 </ul>
+                {% if not user.is_authenticated %}
+                <span class="navbar-text">
+                    <a class="nav-link" aria-current="page" href="{% url 'accounts:login' %}?next={{ request.get_full_path }}">Вход</a>
+                </span>
+                <span class="navbar-text">
+                    <a class="nav-link" aria-current="page" href="{% url 'accounts:registration' %}?next={{ request.get_full_path }}">Регистрация</a>
+                </span>
+                {% else %}
+                <span class="navbar-text">
+                    <a class="nav-link" aria-current="page" href="{% url 'accounts:logout' %}">Выход</a>
+                </span>
+                {% endif %}
+
             </div>
         </div>
     </nav>
