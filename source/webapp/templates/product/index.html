@@ -1,33 +1,41 @@
 {% extends 'base.html' %}
 {% load static %}
 
-{% block title %}E-shop{% endblock %}
+{% block title %}E-shop{% endblock title %}
 
 {% block nav %}
     <li class="nav-item">
-        <a class="nav-link" aria-current="page" href="{% url 'webapp:add_product' %}">Добавить товар</a>
+        <a class="nav-link" aria-current="page" href="{% url 'webapp:product_create' %}">Добавить товар</a>
     </li>
-{% endblock %}
+    <li class="nav-item">
+        <a class="nav-link" aria-current="page" href="{% url 'webapp:cart_view' %}">Корзина</a>
+    </li>
+{% endblock nav %}
 
 {% block content %}
-    {% include 'partials/search.html' %}
-    <h1>Список товаров</h1>
-    <hr>
+    <h1 class="text-center">Товары</h1>
+    <div class="my-3">{% include 'partials/search.html' %}</div>
 
-    <div class="list-group">
-        {% for product in products  %}
-            {% if product.balance >= 1 %}
-                <a href="{% url 'webapp:product_view' product.pk %}" class="list-group-item list-group-item-action">
-                    <div class="d-flex w-80 justify-content-between">
-                        <h5 class="mb-1">{{ product.title }}</h5>
-                        <small class="text-muted">{{ product.get_category_display }}</small>
+    <div class="row my-3">
+        {% for product in products %}
+            <div class="col-12 col-md-4 col-lg-4">
+                <div class="card mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title"><a
+                                href="{% url "webapp:product_view" product.pk %}">{{ product.title }}</a></h5>
+                        <p class="card-text">Категория: {{ product.get_category_display }}</p>
+                        <p class="card-text">Осталось: {{ product.amount }} по {{ product.price }} сом</p>
+                        <div class="btn-group">
+                            <a class="btn btn-primary" href="{% url 'webapp:product_update' product.pk %}">Изменить</a>
+                            <a class="btn btn-danger" href="{% url 'webapp:product_delete' product.pk %}">Удалить</a>
+                        </div>
+                        {% include "partials/cart_add_form.html" %}
                     </div>
-                    <small class="text">Цена: {{ product.price }} сом</small>
-                </a>
-            {% endif %}
+                </div>
+            </div>
         {% endfor %}
     </div>
     {% if is_paginated %}
         {% include 'partials/pagination.html' %}
     {% endif %}
-{% endblock %}
+{% endblock content %}

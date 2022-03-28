@@ -1,5 +1,5 @@
 <div class="pagination">
-    <span class="step-links">
+    <span class="step-links ms-auto me-auto">
         <a href="?page=1{% if search %}&search={{ search }}{% endif %}">&laquo; В начало</a>
         {% if page_obj.has_previous %}
             <a href="?page={{ page_obj.previous_page_number }}{% if search %}&search={{ search }}{% endif %}">Назад</a>

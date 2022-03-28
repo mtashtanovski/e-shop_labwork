@@ -1,0 +1,6 @@
+<form action="{% url "webapp:product_add_to_cart" product.pk %}?next={{ request.get_full_path }}"
+      method="post">
+    {% csrf_token %}
+    <input type="number" name="qty" value="1">
+    <button type="submit" class="btn btn-primary">Добавить</button>
+</form>

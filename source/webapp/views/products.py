@@ -12,7 +12,7 @@ class IndexView(SearchView):
     template_name = 'product/index.html'
     ordering = ['category', 'title']
     search_fields = ['title__icontains']
-    paginate_by = 5
+    paginate_by = 6
     context_object_name = 'products'
 
     def get_queryset(self):
@@ -22,6 +22,15 @@ class IndexView(SearchView):
 class ProductView(DetailView):
     model = Product
     template_name = 'product/product_view.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['url_name'] = "webapp:product_update"
+        context['product_pk'] = self.get_object().pk
+        return context
+
+    def get_queryset(self):
+        return super().get_queryset().filter(balance__gt=0)
 
 
 class ProductCreateView(CreateView):
@@ -42,7 +51,7 @@ class ProductUpdateView(UpdateView):
         return reverse('webapp:product_view', kwargs={'pk': self.object.pk})
 
 
-class DeleteProductView(DeleteView):
+class ProductDeleteView(DeleteView):
     model = Product
     template_name = 'product/delete_product.html'
     success_url = reverse_lazy('webapp:index')
