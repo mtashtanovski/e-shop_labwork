@@ -4,12 +4,16 @@
 {% block title %}{{ product.title }}{% endblock %}
 
 {% block nav %}
+    {% if perms.webapp.change_product %}
     <li class="nav-item">
         <a class="nav-link" aria-current="page" href="{% url 'webapp:product_update' product.pk %}">Редактировать</a>
     </li>
+    {% endif %}
+    {% if perms.webapp.delete_product %}
     <li class="nav-item">
         <a class="nav-link" aria-current="page" href="{% url 'webapp:product_delete' product.pk  %}">Удалить</a>
     </li>
+    {% endif %}
 {% endblock nav %}
 
 {% block content %}
