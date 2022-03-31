@@ -1,31 +1,32 @@
-import pprint
-
 from rest_framework import serializers
-from webapp.models import Product, Order, OrderProduct
+from webapp.models import Product, Order, OrderProduct, Cart
 
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        fields = ('id', 'title', 'description', 'category', 'balance', 'price')
-        read_only_fields = ('id',)
+        fields = '__all__'
+
+
+class CartSerializer(serializers.ModelSerializer):
+    product = ProductSerializer(read_only=True)
+
+    class Meta:
+        model = Cart
+        fields = "__all__"
 
 
 class OrderedProductSerializer(serializers.ModelSerializer):
-    # order = serializers.PrimaryKeyRelatedField(read_only=True)
-    # product = serializers.PrimaryKeyRelatedField(read_only=True)
-    # product = ProductSerializer()
+    product = ProductSerializer()
 
     class Meta:
         model = OrderProduct
-        fields = ('id', 'order', 'product', 'qty')
+        fields = '__all__'
 
 
 class OrderSerializer(serializers.ModelSerializer):
-    # products = OrderedProductSerializer(many=True)
-    # products = serializers.SerializerMethodField()
+    products = OrderedProductSerializer(read_only=True, many=True, source='order_products')
 
     class Meta:
         model = Order
-        fields = ('id', 'name', 'phone', 'address', 'created_at', 'products')
-
+        fields = ['id', 'name', 'address', 'phone', 'products', 'created_at']

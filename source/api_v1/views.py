@@ -2,10 +2,10 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, SAFE_METHODS, AllowAny, IsAdminUser
 
-from webapp.models import Product, Order, OrderProduct
-from api_v1.serializers import ProductSerializer, OrderSerializer, OrderedProductSerializer
+from webapp.models import Product, Order, Cart
+from api_v1.serializers import ProductSerializer, CartSerializer, OrderSerializer
 
 
 class LogoutView(APIView):
@@ -20,17 +20,24 @@ class LogoutView(APIView):
 class ProductViewSet(ModelViewSet):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    # permission_classes = (IsAuthenticated,)
+
+    def get_permissions(self):
+        if self.request.method in SAFE_METHODS:
+            return [AllowAny()]
+        return [IsAdminUser()]
+
+
+class CartViewSet(ModelViewSet):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
 
 
 class OrderViewSet(ModelViewSet):
     queryset = Order.objects.all()
     serializer_class = OrderSerializer
-    # permission_classes = (IsAuthenticated,)
 
-
-class OrderProductViewSet(ModelViewSet):
-    queryset = OrderProduct.objects.all()
-    serializer_class = OrderedProductSerializer
-    # permission_classes = (IsAuthenticated,)
+    def get_permissions(self):
+        if self.action == 'create':
+            return [AllowAny()]
+        return [IsAdminUser()]
 
